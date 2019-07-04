@@ -1,0 +1,54 @@
+﻿
+CREATE TABLE 管理员(
+	ID VARCHAR(12) PRIMARY KEY,
+	password VARCHAR(12) NOT NULL
+);
+
+
+CREATE TABLE 学生(
+	ID VARCHAR(12) PRIMARY KEY,
+	Password VARCHAR(12) NOT NULL
+	Sname VARCHAR(20) NOT NULL,
+	Ssex VARCHAR(2) NOT NULL,
+	Sbirth DATE,
+	Stel VARCHAR(15) UNIQUE,
+	Sacademy VARCHAR(20) NOT NULL,
+	Sclass VARCHAR(20) NOT NULL,
+	Saddress VARCHAR(30) NOT NULL,
+	CHECK (Ssex='男' OR Ssex='女'),
+	CHECK (Sacademy='电子与信息工程学院'  ),
+	CHECK (Sclass='计科1701' OR Sclass='计科1702' OR Sclass='计科1703' OR Sclass='计科1704' )
+);
+
+
+CREATE TABLE 教师(
+	ID VARCHAR(12) PRIMARY KEY,
+	Password VARCHAR(12) NOT NULL，
+	Tname VARCHAR(20) NOT NULL,
+	Tbirth DATE,
+	Tprotitle VARCHAR(6),
+	Cno VARCHAR(10),
+	CHECK (Tprotitle='教授' OR Tprotitle='副教授' OR Tprotitle='讲师'),
+	FOREIGN KEY(Cno) REFERENCES 课程(Cno)
+);
+
+CREATE TABLE 课程(
+	Cno VARCHAR(10) PRIMARY KEY,
+	Cname VARCHAR(40) NOT NULL,
+	Ccredit FLOAT(2,1),
+	CHECK (Cname='计算机组成原理' OR Cname='Java' OR Cname='计算机英语' OR Cname='数据库系统概论')
+
+);
+
+
+
+CREATE TABLE 成绩(
+	Sno VARCHAR(12),
+	Cno VARCHAR(10),
+	Grade SMALLINT(3),
+	Point FLOAT(2,1),
+	PRIMARY KEY(Sno,Cno),
+	FOREIGN KEY(Sno) REFERENCES 学生(ID),
+	FOREIGN KEY(Cno) REFERENCES 课程(Cno)
+);
+
